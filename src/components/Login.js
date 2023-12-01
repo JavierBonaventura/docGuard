@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import Navbar from "./Navbar"; 
+import Sidebar from "./Sidebar"; 
 
 function Login() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleSignIn = () => {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (username === "admin" && password === "admin") {
+      setIsLoggedIn(true);
+    } else {
+      alert("Invalid credentials. Please try again.");
+    }
+  };
+
+  if (isLoggedIn) {
+    return (
+      <div>
+        <Navbar />
+        <Sidebar />
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen bg-gray-200 py-20 p-4 md:p-20 lg:p-32">
       <div className="max-w-sm bg-white rounded-lg overflow-hidden shadow-lg mx-auto">
@@ -32,13 +56,14 @@ function Login() {
             </div>
             <div className="flex items-center justify-between">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-[#e3b016] hover:bg-[#c09000] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
+                onClick={handleSignIn}
               >
                 Sign In
               </button>
               <a
-                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                className="inline-block align-baseline font-bold text-sm text-[#e3b016] hover:text-[#c09000]"
                 href="#"
               >
                 Forgot Password?
