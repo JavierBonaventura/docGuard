@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar"; 
 import Sidebar from "./Sidebar"; 
+import Content from './Content';
 
 function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,10 +19,13 @@ function Login() {
 
   if (isLoggedIn) {
     return (
-      <div>
-        <Navbar />
+      <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex flex-wrap">
         <Sidebar />
+        <Content />
       </div>
+    </div>
     );
   }
 
@@ -56,14 +60,14 @@ function Login() {
             </div>
             <div className="flex items-center justify-between">
               <button
-                className="bg-[#e3b016] hover:bg-[#c09000] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-[#fece2f] hover:bg-[#c09000] text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
                 onClick={handleSignIn}
               >
                 Sign In
               </button>
               <a
-                className="inline-block align-baseline font-bold text-sm text-[#e3b016] hover:text-[#c09000]"
+                className="inline-block align-baseline font-bold text-sm text-[#fece2f] hover:text-[#c09000]"
                 href="#"
               >
                 Forgot Password?
