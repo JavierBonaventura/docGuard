@@ -1,33 +1,22 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar"; 
-import Sidebar from "./Sidebar"; 
-import Content from './Content';
 
-function Login() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function Login({ onLogin }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSignIn = () => {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
     if (username === "admin" && password === "admin") {
-      setIsLoggedIn(true);
+      onLogin();
     } else {
       alert("Invalid credentials. Please try again.");
     }
   };
 
-  if (isLoggedIn) {
-    return (
-      <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-wrap">
-        <Sidebar />
-        <Content />
-      </div>
-    </div>
-    );
-  }
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSignIn();
+    }
+  };
 
   return (
     <div className="h-screen bg-gray-200 py-20 p-4 md:p-20 lg:p-32">
@@ -35,7 +24,7 @@ function Login() {
         <div className="p-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h2>
           <p className="text-gray-700 mb-6">Please sign in to your account</p>
-          <form>
+          <form onKeyPress={handleKeyPress}>
             <div className="mb-4">
               <label className="block text-gray-700 font-bold mb-2" htmlFor="username">
                 Username
@@ -45,6 +34,8 @@ function Login() {
                 id="username"
                 type="text"
                 placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="mb-6">
@@ -56,6 +47,8 @@ function Login() {
                 id="password"
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="flex items-center justify-between">

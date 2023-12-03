@@ -1,24 +1,40 @@
 import React from 'react';
+import { IoDocumentTextOutline } from 'react-icons/io5';
 
-const Navbar = () => {
+const Navbar = ({ onLogout }) => {
+
+  const gothamBlack = {
+    fontFamily: "Gotham Black",
+  }
+
+
+  const handleSignOut = () => {
+    onLogout();
+  };
+
   return (
     <nav className="bg-[#fece2f] p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-black font-bold text-lg ">DOC GUARD</div>
-        <ul className="flex space-x-4">
-          <li>
+    <div className="container mx-auto flex justify-between items-center">
+      <div className="flex items-center"> 
+        <div className="text-black font-bold text-2xl" style={gothamBlack}>
+          DOC GUARD
+        </div>
+        <IoDocumentTextOutline className="text-black font-bold text-2xl ml-2" style={gothamBlack} />
+      </div>
+      <div className="flex space-x-4">
+          <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
             <a href="#" className="text-black">Inicio</a>
-          </li>
-          <li>
+          </div>
+          <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
             <a href="#" className="text-black">Acerca de</a>
-          </li>
-          <li>
+          </div>
+          <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
             <a href="#" className="text-black">Servicios</a>
-          </li>
-          <li>
-            <a href="#" className="text-black">Contacto</a>
-          </li>
-        </ul>
+          </div>
+          <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
+            <a href="#" className="text-black" onClick={handleSignOut}>Logout</a>
+          </div>
+        </div>
       </div>
     </nav>
   );

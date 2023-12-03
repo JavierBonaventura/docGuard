@@ -1,10 +1,44 @@
-import React from 'react';
+import React from "react";
+import Imagen1 from "../Imagenes/imagen1.jpeg";
+import Imagen2 from "../Imagenes/imagen2.jpeg";
+import Imagen3 from "../Imagenes/imagen3.jpeg";
+import Imagen4 from "../Imagenes/imagen4.jpeg";
+import Imagen5 from "../Imagenes/imagen5.jpeg";
+import Imagen6 from "../Imagenes/imagen6.jpeg";
+import Imagen7 from "../Imagenes/imagen7.jpeg";
 
 const Content = () => {
+  // Array de objetos con la ruta de la imagen y el texto asociado
+  const imagenes = [
+    { src: Imagen1, texto: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { src: Imagen2, texto: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { src: Imagen3, texto: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { src: Imagen4, texto: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { src: Imagen5, texto: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { src: Imagen6, texto: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+    { src: Imagen7, texto: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+  ];
+
   return (
     <div className="flex-1 bg-gray-200 p-4">
-      <h1 className="text-2xl font-bold">Contenido Principal</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit....</p>
+      <table className="table-auto">
+        <thead>
+
+        </thead>
+        <tbody>
+          {imagenes.map((imagen, index) => (
+            <React.Fragment key={index}>
+              <tr class="divide-y divide-gray-400 hover:bg-gray-300 cursor-pointer">
+                <td>
+                  <img src={imagen.src} alt={`Imagen ${index + 1}`} style={{ width: "180px", height: "80px", objectFit: "cover" }}/>
+                </td>
+                <td className="px-8">{imagen.texto}</td>
+              </tr>
+              {index < imagenes.length - 1 && <hr />}
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
