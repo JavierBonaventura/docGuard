@@ -1,15 +1,41 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignIn = () => {
-    if (username === "admin" && password === "admin") {
-      onLogin();
-    } else {
-      alert("Invalid credentials. Please try again.");
+  const handleSignIn = async () => {
+    try {
+      const response = await fetch('https://backend-doc-guard.vercel.app/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Autenticación exitosa
+        onLogin();
+      } else {
+        // Autenticación fallida
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud de autenticación', error);
+      alert('Error al realizar la autenticación. Por favor, inténtelo de nuevo.');
     }
+  };
+
+  const handleRegister = () => {
+    // Add logic for registration here
+    console.log("Register button clicked");
   };
 
   const handleKeyPress = (e) => {
@@ -59,6 +85,13 @@ function Login({ onLogin }) {
               >
                 Sign In
               </button>
+              <button
+              className="bg-[#4285f4] hover:bg-[#255eb2] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="button"
+              onClick={handleRegister}
+            >
+              <Link to="/register">Register</Link>
+            </button>
               <a
                 className="inline-block align-baseline font-bold text-sm text-[#fece2f] hover:text-[#c09000]"
                 href="#"
