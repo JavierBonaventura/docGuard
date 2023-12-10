@@ -22,7 +22,8 @@ function Login({ onLogin }) {
   
       if (response.ok) {
         // Autenticación exitosa
-        onLogin();
+        onLogin(username);
+        console.log(username)
       } else {
         // Autenticación fallida
         alert(`Error: ${data.message}`);

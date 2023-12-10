@@ -1,7 +1,8 @@
 import React from 'react';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 
-const Navbar = ({ onLogout }) => {
+const Navbar = ({ onLogout, loggedInUsername }) => {
+
 
   const gothamBlack = {
     fontFamily: "Gotham Black",
@@ -22,7 +23,7 @@ const Navbar = ({ onLogout }) => {
         <IoDocumentTextOutline className="text-black font-bold text-2xl ml-2" style={gothamBlack} />
       </div>
       <div className="flex space-x-4">
-          <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
+          {/* <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
             <a href="#" className="text-black">Inicio</a>
           </div>
           <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
@@ -30,10 +31,15 @@ const Navbar = ({ onLogout }) => {
           </div>
           <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
             <a href="#" className="text-black">Servicios</a>
+          </div> */}
+          <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
+            <a href="#" className="text-black" onClick={handleSignOut}>Logout</a>      
           </div>
           <div className="hover:bg-yellow-200 px-2 py-1 rounded-md transition-colors duration-300">
-            <a href="#" className="text-black" onClick={handleSignOut}>Logout</a>
-          </div>
+        <a href="#" className="text-black">
+        Usuario logueado - {loggedInUsername}
+        </a>
+      </div>
         </div>
       </div>
     </nav>
