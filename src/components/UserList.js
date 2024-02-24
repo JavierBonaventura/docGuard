@@ -1,80 +1,116 @@
-import React, { useState, useEffect } from 'react';
-import { AiOutlineUser, AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const UserList = () => {
+const UserCRUD = () => {
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [editUserData, setEditUserData] = useState(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('https://backend-doc-guard.vercel.app/users');
-        const data = await response.json();
-        setUsers(data);
+        const response = await axios.get("/api/v1/users");
+        setUsers(response.data);
       } catch (error) {
-        console.error('Error al obtener la lista de usuarios', error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchUsers();
+    fetchData();
   }, []);
 
-  const handleEditUser = (userId) => {
-    // Implementa la lógica para editar el usuario con el id proporcionado
-    console.log('Editar usuario con ID:', userId);
-  };
-
-  const handleDeleteUser = async (userId) => {
+  const handleDeleteUser = async (id) => {
     try {
-      // Realiza la llamada a la API para eliminar el usuario
-      await fetch(`https://backend-doc-guard.vercel.app/users/${userId}`, {
-        method: 'DELETE',
-      });
-
-      // Actualiza el estado eliminando el usuario de la lista
-      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
+      await axios.delete(`/api/v1/user/${id}`);
+      setUsers(users.filter((user) => user.userid !== id));
+      navigate("/userlist");
     } catch (error) {
-      console.error('Error al eliminar el usuario', error);
+      console.error("Error deleting user:", error);
     }
   };
 
+  const handleEditUser = (userData) => {
+    setEditUserData(userData);
+  };
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
-      {users.map((user) => (
-        <li key={user.id} className="pb-3 sm:pb-4">
-          <div className="flex items-center space-x-4 rtl:space-x-reverse">
-            <div className="flex-shrink-0">
-              <AiOutlineUser className="w-8 h-8 text-gray-900 dark:text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                Nombre de Usuario: {user.name}
-              </p>
-              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                Email: {user.email}
-              </p>
-              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                Id: {user._id}
-              </p>
-            </div>
-            <div className="flex-shrink-0 space-x-2">
-              <button
-                onClick={() => handleEditUser(user._id)}
-                className="text-blue-500 hover:text-blue-700"
-              >
-                <AiOutlineEdit />
-              </button>
-              <button
-                onClick={() => handleDeleteUser(user._id)}
-                className="text-red-500 hover:text-red-700"
-              >
-                <AiOutlineDelete />
-              </button>
-            </div>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Listado de usuarios</h1>
+
+      <div className="flex mb-4">
+        <input
+          type="text"
+          className="border rounded py-2 px-4 w-2/5 mr-2"
+          placeholder="Buscar usuario..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <div className="flex-grow"></div>
+        <Link to="/CreateUser">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            Crear usuario
+          </button>
+        </Link>{" "}
+      </div>
+
+      <table className="min-w-full bg-white">
+        <thead className="bg-gray-800 text-white">
+          <tr>
+            <th className="py-2 px-4">Nombre</th>
+            <th className="py-2 px-4">Apellido</th>
+            <th className="py-2 px-4">Email</th>
+            <th className="py-2 px-4">Role ID</th>
+            <th className="py-2 px-4">Account ID</th>
+            <th className="py-2 px-4">Password</th>
+            <th className="py-2 px-4">Status ID</th>
+            <th className="py-2 px-4">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredUsers.map((user) => (
+            <tr key={user.userid}>
+              <td className="border px-4 py-2">{user.name}</td>
+              <td className="border px-4 py-2">{user.lastname}</td>
+              <td className="border px-4 py-2">{user.email}</td>
+              <td className="border px-4 py-2">{user.roleid}</td>
+              <td className="border px-4 py-2">{user.accountid}</td>
+              <td className="border px-4 py-2">{user.password}</td>
+              <td className="border px-4 py-2">{user.statusid}</td>
+              <td className="border px-4 py-2 ">
+                <Link
+                  to={{
+                    pathname: `/editUser/${user.userid}`,
+                    state: { user: user },
+                  }}
+                  className="ml-4 bg-green-500 hover:bg-green-600 text-white font-bold py-[5px] px-2 rounded mr-4"
+                  onClick={() => handleEditUser(user)}
+                >
+                  Editar
+                </Link>
+                <button
+                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded"
+                  onClick={() => handleDeleteUser(user.userid)}
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
-export default UserList;
+export default UserCRUD;

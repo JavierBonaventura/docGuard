@@ -1,110 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-function Login({ onLogin }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const LoginPage = () => {
+    useEffect(() => {
+        const video = document.getElementById("background-video");
+        video.playbackRate = 0.7; // Ralentiza el video a la mitad
+    }, []);
 
-  const handleSignIn = async () => {
-    try {
-      const response = await fetch('https://backend-doc-guard.vercel.app/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        // Autenticación exitosa
-        onLogin(username);
-        console.log(username)
-      } else {
-        // Autenticación fallida
-        alert(`Error: ${data.message}`);
-      }
-    } catch (error) {
-      console.error('Error al realizar la solicitud de autenticación', error);
-      alert('Error al realizar la autenticación. Por favor, inténtelo de nuevo.');
-    }
-  };
-
-  const handleRegister = () => {
-    // Add logic for registration here
-    console.log("Register button clicked");
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSignIn();
-    }
-  };
-
-  return (
-    <div className="h-screen bg-gray-200 py-20 p-4 md:p-20 lg:p-32">
-      <div className="max-w-sm bg-white rounded-lg overflow-hidden shadow-lg mx-auto">
-        <div className="p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h2>
-          <p className="text-gray-700 mb-6">Please sign in to your account</p>
-          <form onKeyPress={handleKeyPress}>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2" htmlFor="username">
-                Username
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
+    return (
+        <div className="font-sans relative">
+            {/* Contenedor del video */}
+            <div className="video-container absolute inset-0 z-0">
+                {/* Inserta tu video aquí */}
+                <video autoPlay muted loop id="background-video" className="w-full h-full object-cover">
+                    <source src="/videos/video.mp4" type="video/mp4" />
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
             </div>
-            <div className="mb-6">
-              <label className="block text-gray-700 font-bold mb-2" htmlFor="password">
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+
+            {/* Contenido de la página */}
+            <div className="relative flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8 z-10">
+                <div className="max-w-sm w-full space-y-8">
+                    <div className="login-box"> {/* Contenedor del formulario de login */}
+                        <h2 className="text-2xl font-bold mb-1">Welcome Back!</h2>
+                        <h3 className="text-lg mb-4">Please sign in to your account</h3>
+                        <form action="#" method="POST">
+                            <div className="mb-4">
+                                <label htmlFor="email" className="block text-base font-medium text-black">Username</label>
+                                <input type="email" id="email" name="email" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-lg border-gray-300 rounded-md" />
+                            </div>
+                            <div className="mb-12">
+                                <label htmlFor="password" className="block text-base font-medium text-black">Password</label>
+                                <input type="password" id="password" name="password" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-lg border-gray-300 rounded-md" />
+                            </div>
+                            <div className="flex justify-between">
+                                <div className="mb-4">
+                                    <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Sign In
+                                    </button>
+                                </div>
+                                <div className="mb-4">
+                                    <button type="button" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                    
+                                        <Link to="/register">Register</Link>
+                                    </button>
+                                </div>
+                                <div>
+                                    <a href="#" className="text-sm text-black font-medium hover:text-gray-900">Forgot your password?</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div className="flex items-center justify-between">
-              <button
-                className="bg-[#fece2f] hover:bg-[#c09000] text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-                onClick={handleSignIn}
-              >
-                Sign In
-              </button>
-              <button
-              className="bg-[#4285f4] hover:bg-[#255eb2] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={handleRegister}
-            >
-              <Link to="/register">Register</Link>
-            </button>
-              <a
-                className="inline-block align-baseline font-bold text-sm text-[#fece2f] hover:text-[#c09000]"
-                href="#"
-              >
-                Forgot Password?
-              </a>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
-  );
-}
+    );
+};
 
-export default Login;
+export default LoginPage;
