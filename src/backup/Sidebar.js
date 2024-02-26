@@ -1,78 +1,41 @@
 import React, { useState } from 'react';
-import { FaHome, FaUser, FaCog, FaInfoCircle, FaList } from 'react-icons/fa';
 
-const Sidebar = ({ onGestionUsuariosClick }) => {
-  const [gestionUsuariosVisible, setGestionUsuariosVisible] = useState(false);
+const Sidebar = () => {
+  const [active, setActive] = useState(null);
 
-  const handleGestionUsuariosClick = () => {
-    const updatedVisibility = !gestionUsuariosVisible;
-    setGestionUsuariosVisible(updatedVisibility);
-    onGestionUsuariosClick(updatedVisibility);
+  const handleClick = (index) => {
+    setActive(index);
   };
-  
+
+  const sidebarItems = [
+    { name: 'Opción 1', icon: 'icono1.svg' },
+    { name: 'Opción 2', icon: 'icono2.svg' },
+    { name: 'Opción 3', icon: 'icono3.svg' },
+    // Agrega más opciones si es necesario
+  ];
+
   return (
-    <div className="bg-[#3b3b3c] h-screen w-1/5 pt-1 left-0 bottom-0 mb-4">
-      <div className="grid grid-cols-1 gap-1">
-        <div className="bg-gray-700 p-2 px-8 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200" onClick={handleGestionUsuariosClick}>
-          <FaUser className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-           Gestion de Usuarios
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaHome className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 2
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaCog className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 3
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaInfoCircle className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 4
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaList className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 5
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaHome className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 6
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaUser className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 7
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaCog className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 8
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaInfoCircle className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 9
-          </a>
-        </div>
-        <div className="bg-gray-700 p-2 px-8 p-2 w-full hover:bg-gray-800 flex items-center cursor-pointer transition-colors duration-200">
-          <FaList className="text-white mr-2" />
-          <a href="#" className="px-2 text-white block text-center">
-            Opción 10
-          </a>
-        </div>
+    <div className="flex h-screen bg-gray-900">
+      <div className="w-1/6 bg-gray-800">
+        {sidebarItems.map((item, index) => (
+          <button
+            key={index}
+            className={`w-full py-4 px-6 flex items-center text-white ${
+              active === index ? 'bg-purple-600' : 'hover:bg-gray-700'
+            }`}
+            onClick={() => handleClick(index)}
+          >
+            <img
+              src={item.icon}
+              alt={`Ícono de ${item.name}`}
+              className="mr-2 w-6 h-6"
+            />
+            <span>{item.name}</span>
+          </button>
+        ))}
+      </div>
+      <div className="flex-1 p-10">
+        {/* Contenido principal aquí */}
       </div>
     </div>
   );

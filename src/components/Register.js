@@ -155,7 +155,7 @@ function Register() {
               >
                 Create an account
               </button>
-              <p className="text-sm font-light text-blak dark:text-gray-400">
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
                 <a
                   href="#"

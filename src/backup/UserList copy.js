@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const UserCRUD = ({ onCreateUserClick, onEditUserClick }) => {
+const UserCRUD = ({ onCreateUserClick }) => {
   const navigate = useNavigate();
 
   const [users, setUsers] = useState([]);
@@ -92,17 +92,16 @@ const UserCRUD = ({ onCreateUserClick, onEditUserClick }) => {
                 <div className="flex justify-center">
                   {" "}
                   
-                  <button
-  className="bg-green-500 hover:bg-green-600 text-white font-bold py-[5px] px-2 rounded mr-4"
-  // onClick={() => {
-  //   handleEditUser(user);
-  //   onEditUserClick();
-  // }}
-  onClick={onEditUserClick}
->
-  Editar
-</button>
-
+                  <Link
+                    to={{
+                      pathname: `/editUser/${user.userid}`,
+                      state: { user: user },
+                    }}
+                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-[5px] px-2 rounded mr-4"
+                    onClick={() => handleEditUser(user)}
+                  >
+                    Editar
+                  </Link>
                   <button
                     className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded"
                     onClick={() => handleDeleteUser(user.userid)}

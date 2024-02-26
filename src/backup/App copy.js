@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./components/Login";
-import UserList from "./components/UserList";
-import CreateUserForm from "./components/CreateUserForm";
-import EditUserForm from "./components/EditUserForm"
+import Login from "../components/Login";
+import UserList from "../components/UserList";
+import CreateUserForm from "../components/CreateUserForm";
+import EditUserForm from "../components/EditUserForm"
 import "./App.css";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "../components/Sidebar";
 
 function App() {
  
