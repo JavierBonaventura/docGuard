@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -9,122 +9,59 @@ const CreateUserForm = () => {
     name: "",
     lastname: "",
     email: "",
-    roleid: "",
-    accountid: "",
+    roleid: 0, // Cambiado a tipo numérico
+    accountid: 0, // Cambiado a tipo numérico
     password: "",
-    statusid: "", // Cambiado a tipo string para el desplegable
+    statusid: 0, // Cambiado a tipo numérico
   });
-
-  const [roles, setRoles] = useState([]);
-  const [accounts, setAccounts] = useState([]);
-  const [statuses, setStatuses] = useState([]);
-
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const response = await fetch("/api/v1/roles");
-        if (!response.ok) {
-          throw new Error("Error al obtener roles");
-        }
-        const rolesData = await response.json();
-        setRoles(rolesData);
-      } catch (error) {
-        console.error("Error al obtener roles:", error);
-      }
-    };
-
-    const fetchAccounts = async () => {
-      try {
-        const response = await fetch("/api/v1/accounts");
-        if (!response.ok) {
-          throw new Error("Error al obtener cuentas");
-        }
-        const accountsData = await response.json();
-        setAccounts(accountsData);
-      } catch (error) {
-        console.error("Error al obtener cuentas:", error);
-      }
-    };
-
-    const fetchStatuses = async () => {
-      try {
-        const response = await fetch("/api/v1/statuses");
-        if (!response.ok) {
-          throw new Error("Error al obtener estados");
-        }
-        const statusesData = await response.json();
-        setStatuses(statusesData);
-      } catch (error) {
-        console.error("Error al obtener estados:", error);
-      }
-    };
-
-    fetchRoles();
-    fetchAccounts();
-    fetchStatuses();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]:
+        name === "roleid" || name === "accountid" || name === "statusid"
+          ? parseInt(value, 10)
+          : value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Convertir roleid, accountid y statusid a números
-      const roleid = parseInt(formData.roleid);
-      const accountid = parseInt(formData.accountid);
-      const statusid = parseInt(formData.statusid);
-  
-      // Verificar si la conversión fue exitosa
-      if (isNaN(roleid) || isNaN(accountid) || isNaN(statusid)) {
-        throw new Error("Los campos Role ID, Account ID y Status ID deben ser números.");
-      }
-  
-      // Actualizar formData con los valores convertidos
-      const updatedFormData = {
-        ...formData,
-        roleid,
-        accountid,
-        statusid,
-      };
-  
       const response = await fetch("/api/v1/adduser", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedFormData),
+        body: JSON.stringify(formData),
       });
-  
+
       if (!response.ok) {
         throw new Error("Error al crear usuario");
       }
-  
+
+      // Aquí puedes manejar el éxito de la creación del usuario
       console.log("Usuario creado exitosamente");
       navigate("/home");
-  
+
+      // Aquí puedes agregar lógica adicional, como limpiar el formulario después de la creación
       setFormData({
         name: "",
         lastname: "",
         email: "",
-        roleid: "",
-        accountid: "",
+        roleid: 0, // Cambiado a tipo numérico
+        accountid: 0, // Cambiado a tipo numérico
         password: "",
-        statusid: "",
+        statusid: 0, // Cambiado a tipo numérico
       });
     } catch (error) {
       console.error("Error al crear usuario:", error);
     }
   };
-  
-
   return (
     <div className="container mx-auto py-4 px-4">
+      {/* <h1 className="text-3xl font-bold mb-4">Crear Usuario</h1> */}
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4"
@@ -183,8 +120,6 @@ const CreateUserForm = () => {
             required
           />
         </div>
-
-        {/* Resto de campos de entrada similares */}
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -192,21 +127,16 @@ const CreateUserForm = () => {
           >
             Role ID
           </label>
-          <select
+          <input
             className="border rounded py-2 px-4 w-full"
             id="roleid"
+            type="text"
             name="roleid"
             value={formData.roleid}
             onChange={handleChange}
+            placeholder="Role ID"
             required
-          >
-            <option value="">Seleccionar Role</option>
-            {roles.map((role) => (
-              <option key={role.roleid} value={role.roleid}>
-                {role.rolename}
-              </option>
-            ))}
-          </select>
+          />
         </div>
         <div className="mb-4">
           <label
@@ -215,21 +145,16 @@ const CreateUserForm = () => {
           >
             Account ID
           </label>
-          <select
+          <input
             className="border rounded py-2 px-4 w-full"
             id="accountid"
+            type="text"
             name="accountid"
             value={formData.accountid}
             onChange={handleChange}
+            placeholder="Account ID"
             required
-          >
-            <option value="">Seleccionar Cuenta</option>
-            {accounts.map((account) => (
-              <option key={account.accountid} value={account.accountid}>
-                {account.accountname}
-              </option>
-            ))}
-          </select>
+          />
         </div>
         <div className="mb-4">
           <label
@@ -256,23 +181,17 @@ const CreateUserForm = () => {
           >
             Status ID
           </label>
-          <select
+          <input
             className="border rounded py-2 px-4 w-full"
             id="statusid"
+            type="text"
             name="statusid"
             value={formData.statusid}
             onChange={handleChange}
+            placeholder="Status ID"
             required
-          >
-            <option value="">Seleccionar Estado</option>
-            {statuses.map((status) => (
-              <option key={status.statusid} value={status.statusid}>
-                {status.statusname}
-              </option>
-            ))}
-          </select>
+          />
         </div>
-        {/* Resto de campos de entrada similares */}
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

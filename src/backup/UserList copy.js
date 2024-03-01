@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const UserCRUD = ({ onCreateUserClick }) => {
+const UserCRUD = ({ onCreateUserClick, onEditUserClick }) => {
   const navigate = useNavigate();
 
   const [users, setUsers] = useState([]);
@@ -27,7 +27,7 @@ const UserCRUD = ({ onCreateUserClick }) => {
     try {
       await axios.delete(`/api/v1/user/${id}`);
       setUsers(users.filter((user) => user.userid !== id));
-      navigate("/userlist");
+      navigate("/home");
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -92,16 +92,17 @@ const UserCRUD = ({ onCreateUserClick }) => {
                 <div className="flex justify-center">
                   {" "}
                   
-                  <Link
-                    to={{
-                      pathname: `/editUser/${user.userid}`,
-                      state: { user: user },
-                    }}
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-[5px] px-2 rounded mr-4"
-                    onClick={() => handleEditUser(user)}
-                  >
-                    Editar
-                  </Link>
+                  <button
+  className="bg-green-500 hover:bg-green-600 text-white font-bold py-[5px] px-2 rounded mr-4"
+  // onClick={() => {
+  //   handleEditUser(user);
+  //   onEditUserClick();
+  // }}
+  onClick={onEditUserClick}
+>
+  Editar
+</button>
+
                   <button
                     className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded"
                     onClick={() => handleDeleteUser(user.userid)}

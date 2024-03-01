@@ -1,99 +1,55 @@
-import React, { useState } from "react";
-import { FaHome, FaUser, FaCog, FaInfoCircle, FaList, FaFile } from "react-icons/fa";
-import sidebarIcon from "../Imagenes/pipeguard.svg";
-import UserList from "./UserList";
-import CreateUserForm from "./CreateUserForm";
-import EditUser from "./EditUserForm";
+import React, { useState, useEffect } from 'react';
+import { FaHome, FaUser, FaCog, FaInfoCircle, FaList } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
 
-const Sidebar = () => {
-  const [active, setActive] = useState(null);
-  const [selectedComponent, setSelectedComponent] = useState('UserList');
+const Sidebar = ({ onLogout }) => {
+  const [activeOption, setActiveOption] = useState(null);
+  const location = useLocation();
 
-  const handleClick = (index) => {
-    setActive(index);
-    switch(index) {
-      case 0:
-        setSelectedComponent('UserList');
-        break;
-      case 1:
-        setSelectedComponent('CreateUserForm');
-        break;
-      case 2:
-        setSelectedComponent('Settings');
-        break;
-      case 3:
-        setSelectedComponent('Info');
-        break;
-      case 4:
-        setSelectedComponent('List');
-        break;
-      default:
-        setSelectedComponent('UserList');
-    }
-  };
-
-  const handleCreateUserClick = () => {
-    setSelectedComponent('CreateUserForm');
-  };
-
-  
-  const handleEditUserClick = () => {
-    console.log("hola")
-    setSelectedComponent('EditUserForm');
-  };
-
-  const sidebarItems = [
-    { name: "Home", icon: <FaHome /> },
-    { name: "User", icon: <FaUser /> },
-    { name: "Settings", icon: <FaCog /> },
-    { name: "Info", icon: <FaInfoCircle /> },
-    { name: "List", icon: <FaList /> },
-    { name: "Home", icon: <FaHome /> },
-    { name: "User", icon: <FaUser /> },
+  const sidebarOptions = [
+    { icon: <FaUser />, label: 'Usuarios', route: '/usuarios' },
+    { icon: <FaHome />, label: 'Opción 2', route: '/opcion2' },
+    { icon: <FaCog />, label: 'Opción 3', route: '/opcion3' },
+    { icon: <FaInfoCircle />, label: 'Opción 4', route: '/opcion4' },
+    { icon: <FaList />, label: 'Opción 5', route: '/opcion5' },
+    { icon: <FaHome />, label: 'Opción 6', route: '/opcion6' },
   ];
 
-  const renderSelectedComponent = () => {
-    switch(selectedComponent) {
-      case 'UserList':
-        return <UserList onCreateUserClick={handleCreateUserClick} onEditUserClick={handleEditUserClick} />;
-      case 'CreateUserForm':
-        return <CreateUserForm />;
-        case 'EditUserForm':
-          return <EditUser />;
-      default:
-        return <UserList />;
+  useEffect(() => {
+    const foundIndex = sidebarOptions.findIndex(option => option.route === location.pathname);
+    if (foundIndex !== -1) {
+      setActiveOption(foundIndex);
     }
+  }, [location.pathname, sidebarOptions]);
+
+  const handleClick = (index) => {
+    setActiveOption(index);
   };
-  
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/6 bg-[#262731]">
-        <div className="flex items-center justify-center border-b-2 border-gray-700 shadow-lg py-3">
-          <FaFile className="text-[#ffc619] text-3xl mr-2" />
-          <h1 className="text-[#ffc619] text-3xl font-bold text-center ">Doc-Guard</h1>
-        </div>{" "}
-        <div className="py-2">
-          {sidebarItems.map((item, index) => (
-            <button
-              key={index}
-              className={`ml-2 w-11/12 py-3 px-6 flex items-center rounded-lg mt-1 ${
-                active === index
-                  ? "text-[#ffc619] bg-[#3b3f46] shadow-xl "
-                  : "text-white hover:bg-[#3b3f46] hover:shadow-xl"
-              }`}
-              onClick={() => handleClick(index)}
-            >
-              <span className="mr-2">{item.icon}</span>
-              <span>{item.name}</span>
-            </button>
-          ))}
-        </div>
+    <div className="bg-[#262731] h-screen w-1/6 pt-1 left-0 bottom-0 mb-4">
+      <div className="py-2">
+        {sidebarOptions.map((option, index) => (
+          <Link
+            to={option.route}
+            key={index}
+            className={`ml-2 w-11/12 py-3 px-6 flex items-center rounded-lg mt-1 ${
+              activeOption === index
+                ? "text-[#ffc619] bg-[#3b3f46] shadow-xl"
+                : "text-white hover:bg-[#3b3f46] hover:shadow-xl hover:translate-x-1"
+            }`}
+            onClick={() => handleClick(index)}
+          >
+            <span className="mr-2">{option.icon}</span>
+            <span>{option.label}</span>
+          </Link>
+        ))}
+       
       </div>
-
-      <div className="flex-1 overflow-y-auto">
-        {renderSelectedComponent()}
-      </div>
+      <button className="ml-2 w-1/6 mb-4 py-3 px-6 flex absolute bottom-0 items-center rounded-lg mt-1 text-white hover:text-red-500  hover:translate-x-1" onClick={onLogout}>
+          <span className="mr-2"><FaHome /></span>
+          <span>Cerrar sesión</span>
+        </button>
     </div>
   );
 };
