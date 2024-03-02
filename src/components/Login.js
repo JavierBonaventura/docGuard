@@ -15,7 +15,7 @@ const LoginPage = ({ onLogin }) => {
         e.preventDefault();
         // console.log(formData)
         try {
-            const response = await fetch('http://68.183.126.136:36245/api/v1/userlogin', {
+            const response = await fetch('/api/v1/userlogin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
