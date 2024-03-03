@@ -16,15 +16,9 @@ const Sidebar = ({ onLogout }) => {
   ];
 
   useEffect(() => {
-    const foundIndex = sidebarOptions.findIndex(option => option.route === location.pathname);
-    if (foundIndex !== -1) {
-      setActiveOption(foundIndex);
-    }
+    const matchingOption = sidebarOptions.findIndex(option => option.route === location.pathname);
+    setActiveOption(matchingOption);
   }, [location.pathname, sidebarOptions]);
-
-  const handleClick = (index) => {
-    setActiveOption(index);
-  };
 
   return (
     <div className="bg-[#262731] h-screen w-1/6 pt-1 left-0 bottom-0 mb-4">
@@ -38,18 +32,16 @@ const Sidebar = ({ onLogout }) => {
                 ? "text-[#ffc619] bg-[#3b3f46] shadow-xl"
                 : "text-white hover:bg-[#3b3f46] hover:shadow-xl hover:translate-x-1"
             }`}
-            onClick={() => handleClick(index)}
           >
             <span className="mr-2">{option.icon}</span>
             <span>{option.label}</span>
           </Link>
         ))}
-       
       </div>
-        <button className="ml-2 w-1/6 mb-4 py-3 px-6 flex absolute bottom-0 items-center rounded-lg mt-1 text-white hover:text-red-500  hover:translate-x-1" onClick={onLogout}>
-          <span className="mr-2"><FaHome /></span>
-          <span>Cerrar sesión</span>
-        </button>
+      <button className="ml-2 w-1/6 mb-4 py-3 px-6 flex absolute bottom-0 items-center rounded-lg mt-1 text-white hover:text-red-500  hover:translate-x-1" onClick={onLogout}>
+        <span className="mr-2"><FaHome /></span>
+        <span>Cerrar sesión</span>
+      </button>
     </div>
   );
 };

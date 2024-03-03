@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Login from "./components/Login";
 import UserList from "./components/UserList";
 import CreateUserForm from "./components/CreateUserForm";
@@ -24,12 +24,12 @@ function App() {
   };
 
   return (
-    <Router>
+   <>
       {loggedIn ? (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
           <NavBar  username={username}/>
           <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-            <Sidebar  onLogout={handleLogout} />
+            <Sidebar  onLogout={handleLogout}/>
             <div style={{ flex: 1, padding: '20px', overflow: 'auto' }}>
               <Routes>
                 <Route path="/crearusuario" element={<CreateUserForm />} />
@@ -42,7 +42,7 @@ function App() {
       ) : (
         <Login onLogin={handleLogin} />
       )}
-    </Router>
+  </>
   );
 }
 
