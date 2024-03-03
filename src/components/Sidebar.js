@@ -46,7 +46,7 @@ const Sidebar = ({ onLogout }) => {
         ))}
        
       </div>
-      <button className="ml-2 w-1/6 mb-4 py-3 px-6 flex absolute bottom-0 items-center rounded-lg mt-1 text-white hover:text-red-500  hover:translate-x-1" onClick={onLogout}>
+        <button className="ml-2 w-1/6 mb-4 py-3 px-6 flex absolute bottom-0 items-center rounded-lg mt-1 text-white hover:text-red-500  hover:translate-x-1" onClick={onLogout}>
           <span className="mr-2"><FaHome /></span>
           <span>Cerrar sesión</span>
         </button>
