@@ -85,23 +85,23 @@ const getStatusName = (statusId) => {
 
 
   return (
-    <div className="container mx-auto py-4 px-4 ">
-      <div className="flex mb-4">
+    <div className="container mx-auto  bg-white shadow-lg">
+      <div className="flex mb-4  ">
         <input
           type="text"
-          className="border rounded py-2 px-1 w-2/5 mr-2"
+          className="border rounded py-2 px-1 w-3/5 mr-2"
           placeholder="Buscar usuario..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <div className="flex-grow"></div>
 
-        <Link to="/crearusuario" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-1 rounded">
+        <Link to="/crearusuario" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded">
           Crear usuario
         </Link>
       </div>
 
-      <table className="min-w-full bg-white">
+      <table className="min-w-full bg-white ">
         <thead className=" text-black">
           <tr>
             <th className="border py-2 px-1">Nombre</th>

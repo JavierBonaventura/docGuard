@@ -124,7 +124,7 @@ const CreateUserForm = () => {
   
 
   return (
-    <div className="container mx-auto py-4 px-4">
+    <div className="container mx-auto ">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4"
