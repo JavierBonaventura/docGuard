@@ -13,7 +13,6 @@ const LoginPage = ({ onLogin }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log(formData)
         try {
             const response = await fetch('/api/v1/userlogin', {
                 method: 'POST',
@@ -22,14 +21,11 @@ const LoginPage = ({ onLogin }) => {
                 },
                 body: JSON.stringify(formData)
             });
-            // console.log(response)
             if (response.ok) {
                 onLogin(formData.username);
 
-                // Manejar la respuesta exitosa (redireccionar, mostrar mensaje, etc.)
                 console.log('Login successful');
             } else {
-                // Manejar errores de inicio de sesión (mostrar mensaje de error, etc.)
                 console.error('Login failed');
             }
         } catch (error) {
@@ -92,14 +88,14 @@ const LoginPage = ({ onLogin }) => {
                                         Sign In
                                     </button>
                                 </div>
-                                <div className="mb-4">
+                                {/* <div className="mb-4">
                                     <Link to="/register" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                                         Register
                                     </Link>
                                 </div>
                                 <div>
                                     <a href="#" className="text-sm text-black font-medium hover:text-gray-900">Forgot your password?</a>
-                                </div>
+                                </div> */}
                             </div>
                         </form>
                     </div>

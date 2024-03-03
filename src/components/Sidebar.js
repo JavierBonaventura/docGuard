@@ -8,7 +8,7 @@ const Sidebar = ({ onLogout }) => {
 
   const sidebarOptions = [
     { icon: <FaUser />, label: 'Usuarios', route: '/usuarios' },
-    { icon: <FaHome />, label: 'Opción 2', route: '/opcion2' },
+    { icon: <FaHome />, label: 'Cuentas', route: '/cuentas' },
     { icon: <FaCog />, label: 'Opción 3', route: '/opcion3' },
     { icon: <FaInfoCircle />, label: 'Opción 4', route: '/opcion4' },
     { icon: <FaList />, label: 'Opción 5', route: '/opcion5' },
@@ -21,7 +21,7 @@ const Sidebar = ({ onLogout }) => {
   }, [location.pathname, sidebarOptions]);
 
   return (
-    <div className="bg-[#262731] h-screen w-1/6 pt-1 left-0 bottom-0 mb-4">
+    <div className="bg-gradient-to-b from-[#262731] to-[#181c42] h-screen w-1/6 pt-1 left-0 bottom-0 mb-4">
       <div className="py-2">
         {sidebarOptions.map((option, index) => (
           <Link
