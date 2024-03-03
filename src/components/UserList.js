@@ -64,18 +64,21 @@ const UserCRUD = ({ onCreateUserClick, onEditUserClick }) => {
 
 // Función para obtener el nombre del rol según el ID
 const getRoleName = (roleId) => {
+  if (roles.length === 0) return "Unknown";
   const role = roles.find((r) => r.roleid === roleId);
   return role ? role.rolename : "Unknown";
 };
 
 // Función para obtener el nombre del account según el ID
 const getAccountName = (accountId) => {
+  if (accounts.length === 0) return "Unknown";
   const account = accounts.find((r) => r.accountid === accountId);
   return account ? account.accountname : "Unknown";
 };
 
 // Función para obtener el nombre del status según el ID
 const getStatusName = (statusId) => {
+  if (statuses.length === 0) return "Unknown";
   const status = statuses.find((r) => r.statusid === statusId);
   return status ? status.statusname : "Unknown";
 };
