@@ -9,7 +9,7 @@ import Sidebar from "./components/Sidebar";
 import NavBar from "./components/NavBar";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [username, setUsername] = useState('');
 
   const handleLogin = (username) => {
