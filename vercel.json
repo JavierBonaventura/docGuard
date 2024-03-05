@@ -6,6 +6,7 @@
     { "source": "/api/v1/accounts", "destination": "http://68.183.126.136:36245/api/v1/accounts" },
     { "source": "/api/v1/statuses", "destination": "http://68.183.126.136:36245/api/v1/statuses" },
     { "source": "/api/v1/user", "destination": "http://68.183.126.136:36245/api/v1/user" },
-    { "source": "/api/v1/adduser", "destination": "http://68.183.126.136:36245/api/v1/adduser" }
+    { "source": "/api/v1/adduser", "destination": "http://68.183.126.136:36245/api/v1/adduser" },
+    {"source": "/api/v1/user/:id*", "destination": "http://68.183.126.136:36245/api/v1/user/:id*"}
   ]
 }
