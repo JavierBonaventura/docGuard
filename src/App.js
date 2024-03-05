@@ -50,7 +50,7 @@ function App() {
               <Routes>
                 <Route path="/crearusuario" element={<CreateUserForm />} />
                 <Route path="/usuarios" element={<UserList />} />
-                <Route path="/productos" element={<EditUserForm />} />
+                <Route path="/editarusuario/:userId" element={<EditUserForm />} />
                 <Route path="/cuentas" element={<CuentasList />} />
 
               </Routes>

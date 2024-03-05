@@ -4,10 +4,8 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-
 const EditUser = () => {
     const navigate = useNavigate();
-
     const { userId } = useParams();
     const [formData, setFormData] = useState({
         name: '',
@@ -19,12 +17,25 @@ const EditUser = () => {
         statusid: ''
     });
 
+    console.log("el id es" + userId)
+
     useEffect(() => {
         const fetchUser = async () => {
             try {
                 const response = await axios.get(`/api/v1/user/${userId}`);
                 const userData = response.data;
-                setFormData(userData);
+               
+
+                // Autocompletar los campos del formulario con los datos del usuario
+                setFormData({
+                    name: userData.name,
+                    lastname: userData.lastname,
+                    email: userData.email,
+                    roleid: userData.roleid,
+                    accountid: userData.accountid,
+                    password: userData.password,
+                    statusid: userData.statusid
+                });
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
@@ -43,16 +54,14 @@ const EditUser = () => {
             await axios.put(`/api/v1/user/${userId}`, formData);
             // Manejar el éxito de la actualización
             console.log('Usuario actualizado correctamente');
-            navigate('/userlist');
-
+            navigate('/usuarios');
         } catch (error) {
             console.error('Error actualizando usuario:', error);
         }
     };
 
     return (
-        <div className="container mx-auto w-8/12">
-            <h1 className="text-3xl font-bold mb-4">Editar Usuario</h1>
+        <div className="container mx-auto ">
             <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
@@ -166,10 +175,10 @@ const EditUser = () => {
           >
             Modificar Usuario
           </button>
-          <Link to="/userlist">
+          <Link to="/usuarios">
             <button
               className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => navigate("/userlist")}
+              onClick={() => navigate("/usuarios")}
             >
               Volver
             </button>

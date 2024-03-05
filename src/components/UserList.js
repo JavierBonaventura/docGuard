@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const UserCRUD = ({ onCreateUserClick, onEditUserClick }) => {
@@ -57,9 +57,9 @@ const UserCRUD = ({ onCreateUserClick, onEditUserClick }) => {
   };
 
   const editUser = (userId) => {
-    // Lógica para editar un usuario, por ejemplo, redirigir a la página de edición
-    // Puedes usar navigate o simplemente cambiar la URL
+    navigate(`/editarusuario/${userId}`);
   };
+  
 
   const filteredUsers = users.filter(
     (user) =>
@@ -166,6 +166,8 @@ const UserCRUD = ({ onCreateUserClick, onEditUserClick }) => {
           </div>
         </div>
       )}
+  
+
     </div>
 
     
